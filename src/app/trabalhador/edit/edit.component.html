@@ -1,0 +1,21 @@
+<mat-card>
+  <mat-card-content *ngIf="trabalhador">
+    <h2 class="example-h2">Trabalhador</h2>
+    <mat-form-field class="full-width">
+      <mat-label>Nome</mat-label>
+      <input matInput placeholder="Ex. Jean" [(ngModel)]="trabalhador.nome">
+    </mat-form-field>
+    <h3 class="example-h2">Atividades</h3>
+    <section class="full-widht">
+      <mat-checkbox [(ngModel)]="trabalhador.atividades['CRISTAL']">Cristal</mat-checkbox>
+      <mat-checkbox [(ngModel)]="trabalhador.atividades['PASSE']">Passe</mat-checkbox>
+      <mat-checkbox [(ngModel)]="trabalhador.atividades['APOMETRIA']">Apometria</mat-checkbox>
+      <mat-checkbox [(ngModel)]="trabalhador.atividades['ESTUDO']">Estudo</mat-checkbox>
+    </section>
+    <h3 class="example-h2">Datas</h3>
+    <section class="full-widht">
+      <mat-checkbox *ngFor="let data of trabalhador.datas" [(ngModel)]="data.status">{{data.data}} - {{data.dia}}</mat-checkbox>
+    </section>
+  </mat-card-content>
+  <button mat-raised-button (click)="gravar()">Gravar</button>
+</mat-card>
