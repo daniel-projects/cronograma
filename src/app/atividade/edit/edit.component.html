@@ -5,6 +5,14 @@
       <mat-label>Descrição</mat-label>
       <input matInput placeholder="Ex. Estudo" [(ngModel)]="atividade.descricao">
     </mat-form-field>
+    <mat-form-field class="full-width">
+      <mat-label>Quantidade Por dia</mat-label>
+      <input matInput placeholder="Ex. 1" [(ngModel)]="atividade.quantidade">
+    </mat-form-field>
+    <h3 class="example-h2">Dias da Semana</h3>
+    <section class="full-width">
+      <mat-checkbox *ngFor="let dia of diasSemana" value [(ngModel)]="dia.status">{{dia.nome}}</mat-checkbox>
+    </section>
   </mat-card-content>
   <button mat-raised-button (click)="gravar()">Gravar</button>
 </mat-card>

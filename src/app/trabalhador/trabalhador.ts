@@ -1,16 +1,14 @@
+import { Atividade } from "../atividade/atividade";
+
 export class Trabalhador {
   id?: string;
   nome: string;
-  atividades: Object;
+  numVezesEscalado: number;
+  atividades: Array<{atividade:Atividade, status: boolean}>;
   datas: Array<{data:string, dia:string, status: boolean}>;
   constructor() {
-    this.atividades = {
-      CRISTAL: false,
-      PASSE: false,
-      APOMETRIA: false,
-      ESTUDO: false
-    }
     this.datas = gerarDatas();
+    this.numVezesEscalado = 0;
   }
 }
 

@@ -4,21 +4,28 @@ import { NgModule } from '@angular/core';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppRoutingModule } from './app-routing.module';
-import { HomeComponent } from './home/home.component';
-import { MatSidenavModule, MatListModule, MatToolbarModule, MatCardModule, MatFormFieldModule, MatButtonModule, MatSelectModule, MatGridListModule, MatCheckboxModule, MatTableDataSource, MatTableModule } from '@angular/material';
+import { MatSidenavModule, MatListModule, MatToolbarModule, MatCardModule, MatFormFieldModule, MatButtonModule, MatSelectModule, MatGridListModule, MatCheckboxModule, MatTableDataSource, MatTableModule, MatInputModule, MatIconModule } from '@angular/material';
 import { AngularFireModule } from '@angular/fire';
 import { environment } from '../environments/environment';
 import { AngularFirestoreModule } from '@angular/fire/firestore';
+import { AngularFireAuthModule } from '@angular/fire/auth';
+import { AngularFireAuthGuardModule } from '@angular/fire/auth-guard';
+import { AngularFireAnalyticsModule, UserTrackingService, ScreenTrackingService } from '@angular/fire/analytics';
+import { FormsModule } from '@angular/forms';
+import { LoginComponent } from './login/login.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    HomeComponent
+    LoginComponent
   ],
   imports: [
     BrowserModule,
     AngularFireModule.initializeApp(environment.firebase),
+    AngularFireAnalyticsModule,
     AngularFirestoreModule,
+    AngularFireAuthModule,
+    AngularFireAuthGuardModule,
     BrowserAnimationsModule,
     AppRoutingModule,
     MatSidenavModule,
@@ -30,9 +37,16 @@ import { AngularFirestoreModule } from '@angular/fire/firestore';
     MatSelectModule,
     MatGridListModule,
     MatCheckboxModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatIconModule,
+    FormsModule,
     MatTableModule
   ],
-  providers: [],
+  providers: [
+    UserTrackingService,
+    ScreenTrackingService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

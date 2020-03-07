@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import { AngularFireAuth } from '@angular/fire/auth';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-root',
@@ -6,5 +8,22 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  title = 'crono';
+  logado = false;
+
+  constructor(
+    private afAuth: AngularFireAuth,
+    private router: Router
+  ) {
+    this.afAuth.authState.subscribe(
+      data => {
+        this.logado = data !== null;
+        console.log(data);
+      }
+    )
+  }
+
+  async logout() {
+    await this.afAuth.auth.signOut();
+    this.router.navigate(['/']);
+  }
 }

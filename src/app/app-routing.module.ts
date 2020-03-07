@@ -1,21 +1,19 @@
 import { NgModule }              from '@angular/core';
 import { RouterModule, Routes }  from '@angular/router';
-
-import { HomeComponent }   from './home/home.component';
+import { LoginComponent } from './login/login.component';
+import { AngularFireAuthGuard } from '@angular/fire/auth-guard';
 
 const appRoutes: Routes = [
-  { path: '', component: HomeComponent, pathMatch: 'full' },
-  { path: 'trabalhador', loadChildren: () => import('./trabalhador/trabalhador.module').then( m => m.TrabalhadorModule)},
-  { path: 'escala', loadChildren: () => import('./escala/escala.module').then( m => m.EscalaModule)},
-  { path: 'atividade', loadChildren: () => import('./atividade/atividade.module').then( m => m.AtividadeModule)},
-  { path: 'semana', loadChildren: () => import('./semana/semana.module').then( m => m.SemanaModule)}
+  { path: '', loadChildren: () => import('./escala/escala.module').then( m => m.EscalaModule)},
+  { path: 'trabalhador', canActivate: [AngularFireAuthGuard] ,loadChildren: () => import('./trabalhador/trabalhador.module').then( m => m.TrabalhadorModule)},
+  { path: 'login', component: LoginComponent, pathMatch: 'full' },
+  { path: 'atividade', canActivate: [AngularFireAuthGuard], loadChildren: () => import('./atividade/atividade.module').then( m => m.AtividadeModule)},
 ];
 
 @NgModule({
   imports: [
     RouterModule.forRoot(
-      appRoutes,
-      { enableTracing: true } // <-- debugging purposes only
+      appRoutes
     )
   ],
   exports: [

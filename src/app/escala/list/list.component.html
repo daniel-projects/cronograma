@@ -2,5 +2,5 @@
   <mat-card-content>
     <h2 class="example-h2">Escalas</h2>
   </mat-card-content>
-  <a mat-raised-button routerLink="new">Adicionar</a>
+  <a *ngIf="logado" mat-raised-button routerLink="new">Adicionar</a>
 </mat-card>
