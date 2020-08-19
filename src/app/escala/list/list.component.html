@@ -1,6 +1,25 @@
 <mat-card>
   <mat-card-content>
-    <h2 class="example-h2">Escalas</h2>
+    <h2 class="example-h2">Escalas</h2> 
+    <table mat-table [dataSource]="lista" class="mat-elevation-z8">
+      <ng-container matColumnDef="dataIni">
+        <th mat-header-cell *matHeaderCellDef>Data Inicial</th>
+        <td mat-cell *matCellDef="let element"> {{element.dataIni}} </td>
+      </ng-container>
+      <ng-container matColumnDef="dataFim">
+        <th mat-header-cell *matHeaderCellDef>Data Final</th>
+        <td mat-cell *matCellDef="let element"> {{element.dataFim}} </td>
+      </ng-container>
+      <ng-container matColumnDef="acoes">
+        <th mat-header-cell *matHeaderCellDef>Ações</th>
+        <td mat-cell *matCellDef="let element">
+          <a mat-raised-button routerLink="view/{{element.id}}">Ver</a>
+          <button *ngIf="logado" mat-raised-button (click)="excluir(element.id)">Excluir</button>
+        </td>
+      </ng-container>
+      <tr mat-header-row *matHeaderRowDef="colunas"></tr>
+      <tr mat-row *matRowDef="let row; columns: colunas;"></tr>
+    </table>
   </mat-card-content>
   <a *ngIf="logado" mat-raised-button routerLink="new">Adicionar</a>
 </mat-card>

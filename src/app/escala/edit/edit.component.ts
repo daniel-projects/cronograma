@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { EscalaService } from '../escala.service';
 import { Escala } from '../escala';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-edit',
@@ -13,7 +14,8 @@ export class EditComponent implements OnInit {
   dataIni: Date;
 
   constructor(
-    private escalaService: EscalaService
+    private escalaService: EscalaService,
+    private router: Router
   ) { }
 
   eDomingo(d: Date | null): boolean {
@@ -32,6 +34,11 @@ export class EditComponent implements OnInit {
 
   ngOnInit() {
     
+  }
+
+  async gravar() {
+    const escala = await this.escalaService.push(this.escalaCalculada);
+    this.router.navigate([`view/${escala.id}`]);
   }
 
 }

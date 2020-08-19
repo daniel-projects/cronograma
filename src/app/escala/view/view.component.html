@@ -1,0 +1,14 @@
+<mat-card class="full-widht" *ngIf="escala">
+  <mat-card-content>
+    <h2>Semana: {{escala.dataIni}} - {{escala.dataFim}}</h2>
+    <mat-list *ngFor="let dia of escala.dias">
+      <h3>{{dia.data}}</h3>
+      <mat-list-item *ngFor="let atividade of dia.atividades">
+        <h4 mat-line>{{atividade.atividade.descricao}}</h4>
+        <p mat-line>
+          <span *ngFor="let trabalhador of atividade.trabalhadores">{{trabalhador.nome}} </span>
+        </p>
+      </mat-list-item>
+    </mat-list>      
+  </mat-card-content>
+</mat-card>

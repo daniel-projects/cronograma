@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/auth';
+import { Escala } from '../escala';
+import { EscalaService } from '../escala.service';
 
 @Component({
   selector: 'app-list',
@@ -7,12 +9,23 @@ import { AngularFireAuth } from '@angular/fire/auth';
   styleUrls: ['./list.component.css']
 })
 export class ListComponent implements OnInit {
+
+  lista: Escala[] = [];
+  colunas: string[] = ['dataIni', 'dataFim', 'acoes'];
+
   logado = false;
+
   constructor(
-    private afAuth: AngularFireAuth
+    private afAuth: AngularFireAuth,
+    private escalaService: EscalaService
   ) { }
 
   ngOnInit() {
+    this.escalaService.$data.subscribe(
+      data => {
+        this.lista = data
+      }
+    );
     this.afAuth.authState.subscribe(
       data => {
         this.logado = data !== null;
@@ -21,5 +34,8 @@ export class ListComponent implements OnInit {
     )
   }
   
+  excluir(id: string) {
+    this.escalaService.remove(id);
+  }
 
 }

@@ -9,7 +9,7 @@ import { Trabalhador } from '../trabalhador';
 })
 export class ListComponent implements OnInit {
   lista: Trabalhador[] = [];
-  colunas: string[] = ['nome', 'acoes'];
+  colunas: string[] = ['nome', 'numVezesEscalado', 'acoes'];
   constructor(
     private trabalhadorService: TrabalhadorService
   ) {
@@ -21,6 +21,10 @@ export class ListComponent implements OnInit {
   }
 
   ngOnInit() {}
+
+  addPresenca(id, numVezesEscalado) {
+    this.trabalhadorService.adicionarPresenca(id, numVezesEscalado);
+  }
 
   excluir(id: string) {
     this.trabalhadorService.remove(id);

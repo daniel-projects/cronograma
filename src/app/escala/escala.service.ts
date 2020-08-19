@@ -114,7 +114,7 @@ export class EscalaService {
         .filter(
           a => a.quantidade > 0
         );
-        escala.dias.push(dia);
+        escala.dias.push({...dia});
       } 
     )
     return escala;

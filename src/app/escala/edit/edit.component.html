@@ -9,8 +9,8 @@
   </mat-card-content>
   <button class="app-button" mat-raised-button (click)="gerarEscala()">Gerar Escala</button>
 </mat-card>
-<mat-card>
-  <mat-card-content *ngIf="escala">
+<mat-card *ngIf="escala">
+  <mat-card-content>
     <h2>Semana: {{escala.dataIni}} - {{escala.dataFim}}</h2>
     <section *ngFor="let dia of escala.dias" class="full-widht">
       <h5>{{dia.data}}</h5>
@@ -38,5 +38,6 @@
       </mat-list-item>
     </mat-list>      
   </mat-card-content>
+  <button mat-raised-button (click)="gravar()">Gravar</button>
 </mat-card>
 

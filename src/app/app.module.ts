@@ -9,7 +9,6 @@ import { AngularFireModule } from '@angular/fire';
 import { environment } from '../environments/environment';
 import { AngularFirestoreModule } from '@angular/fire/firestore';
 import { AngularFireAuthModule } from '@angular/fire/auth';
-import { AngularFireAuthGuardModule } from '@angular/fire/auth-guard';
 import { AngularFireAnalyticsModule, UserTrackingService, ScreenTrackingService } from '@angular/fire/analytics';
 import { FormsModule } from '@angular/forms';
 import { LoginComponent } from './login/login.component';
@@ -25,7 +24,6 @@ import { LoginComponent } from './login/login.component';
     AngularFireAnalyticsModule,
     AngularFirestoreModule,
     AngularFireAuthModule,
-    AngularFireAuthGuardModule,
     BrowserAnimationsModule,
     AppRoutingModule,
     MatSidenavModule,

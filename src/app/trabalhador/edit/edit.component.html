@@ -5,6 +5,10 @@
       <mat-label>Nome</mat-label>
       <input matInput placeholder="Ex. Jean" [(ngModel)]="trabalhador.nome">
     </mat-form-field>
+    <mat-form-field class="full-width">
+    <mat-label>Presenças</mat-label>
+      <input matInput placeholder="Ex. 0" type="number" [(ngModel)]="trabalhador.numVezesEscalado">
+    </mat-form-field>
     <h3 class="example-h2">Atividades</h3>
     <section class="full-width">
       <mat-checkbox 

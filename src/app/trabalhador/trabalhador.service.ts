@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore, DocumentReference } from '@angular/fire/firestore';
 import { Observable, of } from 'rxjs';
-import { switchMap } from 'rxjs/operators';
+import { switchMap, first } from 'rxjs/operators';
 import { Trabalhador } from './trabalhador';
 
 @Injectable({
@@ -24,6 +24,12 @@ export class TrabalhadorService {
       })
     );
   }
+
+  public async adicionarPresenca(id: string, numPresenca: number) {
+    const trabalhador =  await this.getById(id).pipe(first()).toPromise();
+    const numVezesEscalado = trabalhador.numVezesEscalado + numPresenca;
+    return this.update(id, {numVezesEscalado});    
+  }
   
   public push(data: Trabalhador): Promise<DocumentReference> {
     return this.afs.collection<Trabalhador>(this.collectionPath).add({...data});
@@ -37,7 +43,7 @@ export class TrabalhadorService {
     return this.afs.doc<Trabalhador>(`${this.collectionPath}/${id}`).set(data);
   }
 
-  public update(id: string, data: Trabalhador): Promise<void> {
+  public update(id: string, data: Object): Promise<void> {
     return this.afs.doc<Trabalhador>(`${this.collectionPath}/${id}`).update(data);
   }
 
