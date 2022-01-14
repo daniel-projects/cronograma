@@ -12,6 +12,7 @@ export class EditComponent implements OnInit {
   escala: Escala;
   escalaCalculada: Escala;
   dataIni: Date;
+  gravando: Boolean = false;
 
   constructor(
     private escalaService: EscalaService,
@@ -28,7 +29,8 @@ export class EditComponent implements OnInit {
   }
 
   async calcularEscala() {
-    this.escalaCalculada = await this.escalaService.calcularEscala(this.escala);
+    let escala = await this.escalaService.gerarEscala(this.dataIni);
+    this.escalaCalculada = await this.escalaService.calcularEscala(escala);
     console.log(this.escalaCalculada);
   }
 
@@ -37,8 +39,10 @@ export class EditComponent implements OnInit {
   }
 
   async gravar() {
+    this.gravando = true;
     const escala = await this.escalaService.push(this.escalaCalculada);
-    this.router.navigate([`view/${escala.id}`]);
+    this.router.navigate([`view/${escala.id}`])
+    ;
   }
 
 }

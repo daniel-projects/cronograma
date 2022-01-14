@@ -2,13 +2,18 @@
   <mat-card-content>
     <h2 class="example-h2">Escalas</h2> 
     <table mat-table [dataSource]="lista" class="mat-elevation-z8">
-      <ng-container matColumnDef="dataIni">
-        <th mat-header-cell *matHeaderCellDef>Data Inicial</th>
-        <td mat-cell *matCellDef="let element"> {{element.dataIni}} </td>
-      </ng-container>
-      <ng-container matColumnDef="dataFim">
-        <th mat-header-cell *matHeaderCellDef>Data Final</th>
-        <td mat-cell *matCellDef="let element"> {{element.dataFim}} </td>
+      <ng-container matColumnDef="datas">
+        <th mat-header-cell *matHeaderCellDef>Escala</th>
+        <td mat-cell *matCellDef="let element">
+          <div *ngFor="let dia of element.dias">
+            <b>{{dia.data}}</b>
+            <span *ngFor="let atividade of dia.atividades">
+              <span *ngFor="let trabalhador of atividade.trabalhadores">
+                {{trabalhador.nome}},
+              </span>
+            </span>
+          </div>
+          </td>
       </ng-container>
       <ng-container matColumnDef="acoes">
         <th mat-header-cell *matHeaderCellDef>Ações</th>

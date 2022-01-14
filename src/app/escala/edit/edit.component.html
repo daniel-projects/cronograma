@@ -7,24 +7,8 @@
       <mat-datepicker #picker></mat-datepicker>
     </mat-form-field>
   </mat-card-content>
-  <button class="app-button" mat-raised-button (click)="gerarEscala()">Gerar Escala</button>
+  <button class="app-button" mat-raised-button (click)="calcularEscala()">Gerar Escala</button>
 </mat-card>
-<mat-card *ngIf="escala">
-  <mat-card-content>
-    <h2>Semana: {{escala.dataIni}} - {{escala.dataFim}}</h2>
-    <section *ngFor="let dia of escala.dias" class="full-widht">
-      <h5>{{dia.data}}</h5>
-      <section class="full-width">
-        <mat-form-field *ngFor="let atividade of dia.atividades">
-          <mat-label>{{atividade.atividade.descricao}}</mat-label>
-          <input matInput placeholder="Ex. Jean" [(ngModel)]="atividade.quantidade">
-        </mat-form-field>
-      </section>
-    </section>
-  </mat-card-content>
-  <button mat-raised-button (click)="calcularEscala()">Calcular Escala</button>
-</mat-card>
-
 <mat-card class="full-widht" *ngIf="escalaCalculada as escala">
   <mat-card-content>
     <h2>Semana: {{escala.dataIni}} - {{escala.dataFim}}</h2>
@@ -38,6 +22,7 @@
       </mat-list-item>
     </mat-list>      
   </mat-card-content>
-  <button mat-raised-button (click)="gravar()">Gravar</button>
+  <button mat-raised-button *ngIf="!gravando" (click)="gravar()">Gravar</button>
+  <mat-label *ngIf="gravando">Gravando...</mat-label>
 </mat-card>
 

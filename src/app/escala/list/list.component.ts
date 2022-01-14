@@ -11,7 +11,7 @@ import { EscalaService } from '../escala.service';
 export class ListComponent implements OnInit {
 
   lista: Escala[] = [];
-  colunas: string[] = ['dataIni', 'dataFim', 'acoes'];
+  colunas: string[] = ['datas', 'acoes'];
 
   logado = false;
 

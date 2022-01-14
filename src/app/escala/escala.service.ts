@@ -23,6 +23,7 @@ export class EscalaService {
 
   async calcularEscala(escala: Escala): Promise<Escala> {
     let disponiveis = await this.trabalhadorService.$data.pipe(first()).toPromise();
+    console.log(disponiveis);
     disponiveis = disponiveis.map(
       d => {
         d["numVezesSemana"] = 0;
@@ -50,8 +51,14 @@ export class EscalaService {
   
   private calcularTrabalhador(disp: Trabalhador[], atividade: Atividade, data: string) {
     const disponiveis = this.shuffle(disp);
-    return disponiveis.reduce(
+    return = disponiveis.reduce(
       (trabalhador: Trabalhador, novoTrabalhador: Trabalhador) => {
+        if (trabalhador && !trabalhador.numVezesEscalado) {
+          trabalhador.numVezesEscalado = 0;
+        }
+        if (novoTrabalhador && !novoTrabalhador.numVezesEscalado) {
+          novoTrabalhador.numVezesEscalado = 0;
+        }
         if (
           (novoTrabalhador.atividades.some(a => atividade.id === a.atividade.id && a.status))
           && 
@@ -59,8 +66,9 @@ export class EscalaService {
           &&
           (novoTrabalhador["numVezesSemana"] < 2)
           &&
-          (novoTrabalhador.numVezesEscalado<= trabalhador.numVezesEscalado || !trabalhador.numVezesEscalado)
+          (novoTrabalhador.numVezesEscalado <= trabalhador.numVezesEscalado || !trabalhador)
         ) 
+
         {
           return novoTrabalhador;
         } else {
@@ -91,8 +99,8 @@ export class EscalaService {
     const dataFim = new Date(dataIni);
     dataFim.setDate(dataIni.getDate() + 6);
     console.log(dataFim);
-    escala.dataIni = dataIni.toLocaleString('pb-BR').substr(0,10);
-    escala.dataFim = dataFim.toLocaleString('pb-BR').substr(0,10);
+    escala.dataIni = dataIni.toLocaleString('pt-BR').substr(0,10);
+    escala.dataFim = dataFim.toLocaleString('pt-BR').substr(0,10);
     const atividades = await this.atividadeService.$data.pipe(first()).toPromise();
     [1, 3, 6].forEach(
       diaNum => {
@@ -100,7 +108,7 @@ export class EscalaService {
         dataDia.setDate(dataIni.getDate() + diaNum);
         const dia = new Dia();
         dia.id = diaNum;
-        dia.data = dataDia.toLocaleString('pb-BR').substr(0,10);
+        dia.data = dataDia.toLocaleString('pt-BR').substr(0,10);
         dia.atividades = atividades
         .map(
           a => {
@@ -132,11 +140,44 @@ export class EscalaService {
     );
   }
   
-  public push(data: Escala): Promise<DocumentReference> {
+  public async push(data: Escala): Promise<DocumentReference> {
+    data.dias.forEach(
+      dia => {
+        dia.atividades.forEach(
+          atividade => {
+            atividade.trabalhadores.forEach(
+              async trabalhador => {
+                let id = trabalhador.id;
+                if (id) {
+                  await this.trabalhadorService.adicionarPresenca(id, 1);
+                }
+              }
+            )
+          }
+        )
+      }
+    )
     return this.afs.collection<Escala>(this.collectionPath).add({...data});
   }
 
-  public remove(id: string): Promise<void> {
+  public async remove(id: string): Promise<void> {
+    let escala = await this.getById(id).pipe(first()).toPromise();
+    escala.dias.forEach(
+      dia => {
+        dia.atividades.forEach(
+          atividade => {
+            atividade.trabalhadores.forEach(
+              async trabalhador => {
+                let id = trabalhador.id;
+                if (id) {
+                  await this.trabalhadorService.adicionarPresenca(id, -1);
+                }
+              }
+            )
+          }
+        )
+      }
+    )
     return this.afs.doc<Escala>(`${this.collectionPath}/${id}`).delete();
   }
 

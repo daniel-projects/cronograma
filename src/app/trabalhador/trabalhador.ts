@@ -26,7 +26,7 @@ function gerarDatas() {
   while (novaData.getFullYear() == ano) {
     const dia = novaData.getDay();
     if (diasSemana.includes(dia)) {
-      const data = novaData.toLocaleString('pb-BR').substr(0,10);
+      const data = novaData.toLocaleString('pt-BR').substr(0,10);
       datas.push({
         data,
         dia: nomeDias[dia],
